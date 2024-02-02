@@ -22,6 +22,7 @@ from django.urls import path
 
 from ads.views import ads as ads_view
 from ads.views import category as cat_view
+from ads.views import users as user_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,8 +31,13 @@ urlpatterns = [
     path('cat/<int:pk>/', cat_view.CategoryDetailView.as_view()),
     path('cat/<int:pk>/update/', cat_view.CategoryUpdateView.as_view()),
     path('cat/<int:pk>/delete/', cat_view.CategoryDeleteView.as_view()),
-    path('ad/', ads_view.AdsView.as_view()),
-    path('ad/<int:pk>/', ads_view.AdsDetailView.as_view())
+    path('ads/', ads_view.AdsListView.as_view()),
+    path('ads/<int:pk>/', ads_view.AdsDetailView.as_view()),
+    path('ads/<int:pk>/update/', ads_view.AdsUpdateView.as_view()),
+    path('ads/<int:pk>/delete/', ads_view.AdsDeleteView.as_view()),
+    path('ads/<int:pk>/upload_images/', ads_view.AdsUploadImageView.as_view()),
+    path('ads/create/', ads_view.AdsCreateView.as_view()),
+    path('user/', user_view.UserListView.as_view()),
 ]
 
 if settings.DEBUG:
