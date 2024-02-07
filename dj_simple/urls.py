@@ -17,28 +17,42 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
-
+from django.urls import path, include
+from rest_framework import routers
 
 from ads.views import ads as ads_view
 from ads.views import category as cat_view
 from ads.views import users as user_view
+from ads.views import locations as loc_view
+
+router = routers.SimpleRouter()
+router.register("location", loc_view.LocationsListView)
 
 urlpatterns = [
+    path('api-auth/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
+
     path('cat/', cat_view.CategoryListView.as_view()),
     path('cat/create/', cat_view.CategoryCreateView.as_view()),
     path('cat/<int:pk>/', cat_view.CategoryDetailView.as_view()),
     path('cat/<int:pk>/update/', cat_view.CategoryUpdateView.as_view()),
     path('cat/<int:pk>/delete/', cat_view.CategoryDeleteView.as_view()),
+
     path('ads/', ads_view.AdsListView.as_view()),
     path('ads/<int:pk>/', ads_view.AdsDetailView.as_view()),
     path('ads/<int:pk>/update/', ads_view.AdsUpdateView.as_view()),
     path('ads/<int:pk>/delete/', ads_view.AdsDeleteView.as_view()),
     path('ads/<int:pk>/upload_images/', ads_view.AdsUploadImageView.as_view()),
     path('ads/create/', ads_view.AdsCreateView.as_view()),
+
     path('user/', user_view.UserListView.as_view()),
+    path('user/create/', user_view.UserCreateView.as_view()),
+    path('user/<int:pk>/', user_view.UserDetailView.as_view()),
+    path('user/<int:pk>/update/', user_view.UserUpdateView.as_view()),
+    path('user/<int:pk>/delete/', user_view.UserDestroyView.as_view()),
 ]
+
+urlpatterns += router.urls
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,2 +1,6 @@
 .DS_Store
 .idea/
+ads/views/__pycache__/
+dj_simple/__pycache__/
+ads/__pycache__/
+ dj_simple/__pycache__/
